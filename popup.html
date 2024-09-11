@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revisión de Alistamiento</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 10px;
+      background-color: #f4f4f9;
+      color: #333;
+      width: 300px;
+    }
+    h1 {
+      font-size: 18px;
+      color: #005883;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 14px;
+      margin: 10px 0;
+    }
+    .alert {
+      background-color: #ffdddd;
+      border: 1px solid #ffcccc;
+      color: #d8000c;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      display: none; /* Initially hidden */
+    }
+    .notify {
+      background-color: #e2f0cb;
+      border: 1px solid #c6d880;
+      color: #4f8a10;
+      padding: 10px;
+      border-radius: 5px;
+      display: none; /* Initially hidden */
+    }
+  </style>
+</head>
+<body>
+  <h1>Revisión de Alistamiento</h1>
+  <p>Automáticamente revisando si hay enlaces de acreditación en los cursos.</p>
+  <div id="alert" class="alert"></div>
+  <div id="notification" class="notify"></div>
+
+  <script src="./popup.js"></script>
+</body>
+</html>

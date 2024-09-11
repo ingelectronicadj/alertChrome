@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Revisión de Alistamiento de Cursos",
+  "version": "1.0",
+  "description": "Este plugin alerta si hay enlaces de acreditación en la plataforma de la UNAD.",
+  "permissions": [
+    "tabs",
+    "storage",
+    "alarms",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://aurea2.unad.edu.co/oai/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
