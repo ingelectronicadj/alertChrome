@@ -23,31 +23,31 @@
       font-size: 14px;
       margin: 10px 0;
     }
-    .alert {
-      background-color: #ffdddd;
-      border: 1px solid #ffcccc;
-      color: #d8000c;
-      padding: 10px;
-      border-radius: 5px;
-      margin-bottom: 10px;
-      display: none; /* Initially hidden */
+    .countdown {
+      font-weight: bold;
+      color: #d9534f; /* color de alerta */
     }
-    .notify {
-      background-color: #e2f0cb;
-      border: 1px solid #c6d880;
-      color: #4f8a10;
+    button {
+      display: block;
+      width: 100%;
       padding: 10px;
+      background-color: #005883;
+      border: none;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
       border-radius: 5px;
-      display: none; /* Initially hidden */
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #046b9f;
     }
   </style>
 </head>
 <body>
   <h1>Revisión de Alistamiento</h1>
-  <p>Automáticamente revisando si hay enlaces de acreditación en los cursos.</p>
-  <div id="alert" class="alert"></div>
-  <div id="notification" class="notify"></div>
+  <p>Este plugin te ayudará a verificar si hay enlaces de acreditación en los cursos.</p>
+  <div id="alert" style="display: none;"></div>
+  <p id="notification" style="display: none;"></p>
 
   <script src="./popup.js"></script>
-</body>
-</html>

@@ -1,17 +1,28 @@
 // content.js
 
-// Función para contar los enlaces de acreditación en la página
-function countAcreditarLinks() {
-  const links = document.querySelectorAll('a');
-  let count = 0;
-  links.forEach(link => {
-    if (link.textContent.includes('Acreditar')) {
-      count++;
-    }
-  });
-  // Enviar el conteo al background script
-  chrome.storage.local.set({ 'acreditarLinksCount': count });
-}
+const courses = [];
+const rows = document.querySelectorAll('tr');
 
-// Ejecutar la función al cargar el contenido de la página
-countAcreditarLinks();
+rows.forEach(row => {
+  const cells = row.querySelectorAll('td');
+  if (cells.length > 8) {
+    const courseId = cells[0].textContent.trim();
+    const courseName = cells[1].textContent.trim();
+    const reviewDate = cells[4].textContent.trim(); // No se usa actualmente
+    const sendDate = cells[5].textContent.trim(); // Fecha de envío está en la columna 6
+
+    // Extraer datos solo si hay enlaces de acreditación
+    if (cells[7].textContent.trim() === 'Acreditar') {
+      courses.push({
+        courseId,
+        courseName,
+        sendDate
+      });
+    }
+  }
+});
+
+// Almacenar en chrome.storage.local
+chrome.storage.local.set({ 'accreditationCourses': courses }, () => {
+  console.log('Courses stored:', courses);
+});
