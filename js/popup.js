@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Obtener los cursos almacenados en chrome.storage.local
     chrome.storage.local.get('accreditationCourses', (result) => {
+        console.log('Datos recuperados de chrome.storage.local:', result.accreditationCourses);
+        
         const courses = result.accreditationCourses;
 
         // Asegurarse de que 'courses' es un array antes de continuar
