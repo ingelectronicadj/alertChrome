@@ -7,7 +7,8 @@
     "tabs",
     "storage",
     "alarms",
-    "scripting"
+    "scripting",
+    "notifications"
   ],
   "background": {
     "service_worker": "background.js"
@@ -28,5 +29,8 @@
       "matches": ["https://aurea2.unad.edu.co/oai/*"],
       "js": ["content.js"]
     }
+  ],
+  "host_permissions": [
+    "https://aurea2.unad.edu.co/oai/*"
   ]
 }

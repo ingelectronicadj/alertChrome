@@ -4,50 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Revisión de Alistamiento</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 10px;
-      background-color: #f4f4f9;
-      color: #333;
-      width: 300px;
-    }
-    h1 {
-      font-size: 18px;
-      color: #005883;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    p {
-      font-size: 14px;
-      margin: 10px 0;
-    }
-    .countdown {
-      font-weight: bold;
-      color: #d9534f; /* color de alerta */
-    }
-    button {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      background-color: #005883;
-      border: none;
-      color: white;
-      font-size: 14px;
-      cursor: pointer;
-      border-radius: 5px;
-      margin-top: 10px;
-    }
-    button:hover {
-      background-color: #046b9f;
-    }
-  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-  <h1>Revisión de Alistamiento</h1>
-  <p>Este plugin te ayudará a verificar si hay enlaces de acreditación en los cursos.</p>
+  <h1>
+    Revisión de Alistamiento 
+    <span class="tooltip-icon">
+      <i class="fas fa-info-circle"></i>
+      <span class="tooltip-text">Este plugin te ayudará a verificar si existen cursos por acreditar.</span>
+    </span>
+  </h1>
+  
   <div id="alert" style="display: none;"></div>
   <p id="notification" style="display: none;"></p>
 
-  <script src="./popup.js"></script>
+  <script src="./js/popup.js"></script>
+</body>
+</html>

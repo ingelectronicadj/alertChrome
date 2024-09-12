@@ -1,0 +1,74 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 10px;
+    background-color: #f4f4f9;
+    color: #333;
+    width: 400px; /* Ajuste si es necesario */
+  }
+  
+  h1 {
+    font-size: 18px;
+    color: #005883;
+    text-align: center;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  
+  p {
+    font-size: 14px;
+    margin: 10px 0;
+  }
+  
+  .countdown {
+    font-weight: bold;
+    color: #ff0800; /* color de alerta */
+  }
+  
+  /* Estilos para el icono de información y el tooltip */
+  .tooltip-icon {
+    position: relative;
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 5px;
+    cursor: pointer;
+    color: #005883;
+  }
+  
+  .tooltip-text {
+    visibility: hidden;
+    width: 180px; /* Reducir el ancho para evitar recorte */
+    background-color: #005883;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 13px; /* Ajuste del tamaño de letra */
+    font-weight: normal;
+    position: absolute;
+    z-index: 1;
+    top: 100%; /* Mostrar el tooltip debajo del icono */
+    left: 70%; /* Ajustar hacia la izquierda */
+    transform: translateX(-70%);
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltip-icon:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  /* Flecha que apunta hacia el icono */
+  .tooltip-text::after {
+    content: "";
+    position: absolute;
+    bottom: 100%; /* Flecha apuntando hacia arriba */
+    left: 70%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #005883 transparent;
+  }
+  
