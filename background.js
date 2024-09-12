@@ -7,11 +7,12 @@ chrome.alarms.create('dailyCheckAlarm', {
 });
 
 chrome.alarms.create('reminderAlarm', {
-  when: getNextAlarmTime(11, 50), // Recordatorio a las 11:50 a.m.
+  when: getNextAlarmTime(11, 56), // Recordatorio a las 11:50 a.m.
   periodInMinutes: 24 * 60 // Cada 24 horas
 });
 
 chrome.alarms.onAlarm.addListener((alarm) => {
+  console.log('Alarm triggered:', alarm.name); // Mensaje para verificar el activador de la alarma
   if (alarm.name === 'checkLinksAlarm') {
     chrome.tabs.query({ url: "https://aurea2.unad.edu.co/oai/*" }, (tabs) => {
       tabs.forEach(tab => {

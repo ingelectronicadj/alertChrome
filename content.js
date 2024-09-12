@@ -1,6 +1,9 @@
 const courses = [];
 const rows = document.querySelectorAll('tr');
 
+// Obtener el nombre del periodo académico
+const academicPeriod = document.querySelector('#bper_aca_chosen > a span').textContent.trim();
+
 rows.forEach(row => {
   const cells = row.querySelectorAll('td');
   if (cells.length > 8) {
@@ -13,13 +16,27 @@ rows.forEach(row => {
       courses.push({
         courseId,
         courseName,
-        sendDate
+        sendDate,
+        academicPeriod
       });
     }
   }
 });
 
-// Almacenar en chrome.storage.local
-chrome.storage.local.set({ 'accreditationCourses': courses }, () => {
-  console.log('Courses stored:', courses);
+// Obtener los cursos previamente almacenados
+chrome.storage.local.get('accreditationCourses', (data) => {
+  let existingCourses = data.accreditationCourses || {};
+
+  // Si ya hay cursos para este periodo, actualizarlos, de lo contrario, añadirlos
+  existingCourses[academicPeriod] = existingCourses[academicPeriod] || [];
+
+  // Combinar los cursos nuevos con los existentes
+  const updatedCourses = existingCourses[academicPeriod].concat(courses);
+
+  // Actualizar la lista de cursos en el almacenamiento
+  existingCourses[academicPeriod] = updatedCourses;
+
+  chrome.storage.local.set({ 'accreditationCourses': existingCourses }, () => {
+    console.log(`Cursos del periodo ${academicPeriod} actualizados:`, updatedCourses);
+  });
 });

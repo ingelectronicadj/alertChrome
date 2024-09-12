@@ -19,13 +19,8 @@ body {
     font-size: 14px;
     margin: 10px 0;
   }
-  
-  .countdown {
-    font-weight: bold;
-    color: #ff0800; /* color de alerta */
-  }
-  
-  /* Estilos para el icono de información y el tooltip */
+
+/* Estilos para el icono de información y el tooltip */
   .tooltip-icon {
     position: relative;
     display: inline-block;
@@ -71,4 +66,33 @@ body {
     border-style: solid;
     border-color: transparent transparent #005883 transparent;
   }
-  
+
+  .period-section {
+    margin-bottom: 20px;
+  }
+  h3 {
+    color: #333;
+    margin-bottom: 10px;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  li {
+    background-color: #f0f0f0;
+    margin-bottom: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 13px;
+  }
+
+  /* Estilos para el contador de días restantes */
+.countdown-green {
+  color: green;
+}
+.countdown-orange {
+  color: orange;
+}
+.countdown-red {
+  color: red;
+}
