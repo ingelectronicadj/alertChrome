@@ -93,10 +93,8 @@ function displayCourses(groupedCourses) {
 
             // Asignar una clase según el rango de días restantes
             let countdownClass = '';
-            if (daysRemaining >= 5 && daysRemaining <= 7) {
+            if (daysRemaining >= 3 && daysRemaining <= 7) {
                 countdownClass = 'countdown-green';
-            } else if (daysRemaining >= 3 && daysRemaining <= 4) {
-                countdownClass = 'countdown-orange';
             } else {
                 countdownClass = 'countdown-red';
             }
