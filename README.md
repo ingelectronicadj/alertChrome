@@ -35,4 +35,3 @@ La extensión requiere los siguientes permisos:
 2. **Alarmas**: `background.js` configura alarmas para realizar revisiones periódicas. Cada minuto, `content.js` se ejecuta para buscar nuevos cursos. 
 
 3. **Popup**: `popup.js` gestiona el contenido del popup que muestra la información sobre los cursos pendientes. 
-
