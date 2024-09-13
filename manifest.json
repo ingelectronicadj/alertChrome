@@ -8,8 +8,10 @@
     "storage",
     "action",
     "scripting",
-    "alarms",
-    "https://aurea2.unad.edu.co/*"
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://aurea2.unad.edu.co/oai/*"
   ],
   "background": {
     "service_worker": "background.js"

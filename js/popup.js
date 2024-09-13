@@ -2,18 +2,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Obtener los cursos almacenados en chrome.storage.local
     chrome.storage.local.get('accreditationCourses', (result) => {
         console.log('Datos recuperados de chrome.storage.local:', result.accreditationCourses);
-        
-        const courses = result.accreditationCourses;
 
-        // Asegurarse de que 'courses' es un array antes de continuar
-        if (!Array.isArray(courses)) {
-            console.error('Los cursos no están en el formato esperado:', courses);
+        const courses = result.accreditationCourses || {};
+
+        // Asegurarse de que 'courses' sea un objeto donde cada valor sea un array
+        if (typeof courses !== 'object' || Array.isArray(courses)) {
+            console.error('El formato de los cursos no es un objeto esperado:', courses);
             displayErrorMessage(); // Mostrar un mensaje de error si los datos no son válidos
             return;
         }
 
+        // Convertir el objeto a un array de cursos para procesar
+        const coursesArray = [];
+        Object.values(courses).forEach(periodCourses => {
+            if (Array.isArray(periodCourses)) {
+                coursesArray.push(...periodCourses);
+            }
+        });
+
         // Agrupar los cursos por periodo académico
-        const groupedCourses = groupCoursesByPeriod(courses);
+        const groupedCourses = groupCoursesByPeriod(coursesArray);
         // Mostrar los cursos en el popup
         displayCourses(groupedCourses);
     });
