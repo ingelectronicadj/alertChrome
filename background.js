@@ -1,17 +1,32 @@
-// Crear alarma para revisar cursos cada minuto
-chrome.alarms.create('checkLinksAlarm', { periodInMinutes: 1 }); // Revisar cada minuto
+// Crear alarma para revisar y actualizar los cursos cada minuto
+chrome.alarms.create('checkCoursesAlarm', { periodInMinutes: 1 }); // Revisar cada minuto
 
 chrome.alarms.onAlarm.addListener((alarm) => {
-  console.log('Alarm triggered:', alarm.name); // Mensaje para verificar el activador de la alarma
-  
-  if (alarm.name === 'checkLinksAlarm') {
-    chrome.tabs.query({ url: "https://aurea2.unad.edu.co/oai/*" }, (tabs) => {
-      tabs.forEach(tab => {
-        chrome.scripting.executeScript({
-          target: { tabId: tab.id },
-          files: ['content.js']
-        });
-      });
-    });
+  if (alarm.name === 'checkCoursesAlarm') {
+    console.log('Revisando y actualizando la lista de cursos...');
+    updateStoredCourses(); // Llamar a la función para actualizar la lista de cursos
   }
 });
+
+// Función para actualizar los cursos almacenados, eliminando los que ya fueron acreditados
+function updateStoredCourses() {
+  chrome.storage.local.get('accreditationCourses', (data) => {
+    let existingCourses = data.accreditationCourses || {};
+
+    Object.keys(existingCourses).forEach(period => {
+      // Filtrar los cursos para mantener solo aquellos que siguen pendientes de acreditación
+      const updatedCourses = existingCourses[period].filter(course => {
+        // Si el curso aún tiene el botón "Acreditar", lo mantenemos
+        return !course.accredited; // Verificamos si el curso ya fue acreditado
+      });
+
+      // Actualizar los cursos del periodo con los que no están acreditados
+      existingCourses[period] = updatedCourses;
+    });
+
+    // Guardar los cursos actualizados en el almacenamiento local
+    chrome.storage.local.set({ 'accreditationCourses': existingCourses }, () => {
+      console.log('Lista de cursos actualizada:', existingCourses);
+    });
+  });
+}

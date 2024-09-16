@@ -34,9 +34,14 @@ chrome.storage.local.get('accreditationCourses', (data) => {
   // Si ya hay cursos para este periodo, actualizarlos, de lo contrario, añadirlos
   existingCourses[academicPeriod] = existingCourses[academicPeriod] || [];
 
+  // Filtrar cursos existentes para eliminar los que ya no tienen el botón "Acreditar"
+  const filteredExistingCourses = existingCourses[academicPeriod].filter(existingCourse => 
+    courses.some(course => course.courseId === existingCourse.courseId)
+  );
+
   // Combinar los cursos nuevos con los existentes (evitar duplicados)
-  const updatedCourses = existingCourses[academicPeriod].concat(courses.filter(course => 
-    !existingCourses[academicPeriod].some(existingCourse => existingCourse.courseId === course.courseId)
+  const updatedCourses = filteredExistingCourses.concat(courses.filter(course => 
+    !filteredExistingCourses.some(existingCourse => existingCourse.courseId === course.courseId)
   ));
 
   // Actualizar la lista de cursos en el almacenamiento

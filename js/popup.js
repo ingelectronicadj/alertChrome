@@ -46,7 +46,7 @@ function groupCoursesByPeriod(courses) {
     return grouped; // Devolver los cursos agrupados por periodo
 }
 
-// Función para calcular los días restantes para revisar un curso
+// Función para calcular los días restantes o de retraso para revisar un curso
 function calculateDaysRemaining(sendDate) {
     const reviewDeadlineDays = 7; // Días de plazo para la revisión
     const today = new Date(); // Fecha actual
@@ -58,9 +58,15 @@ function calculateDaysRemaining(sendDate) {
     deadlineDate.setDate(sendDateObj.getDate() + reviewDeadlineDays);
 
     // Calcular la diferencia en días entre hoy y la fecha límite
-    const daysRemaining = Math.max(Math.ceil((deadlineDate - today) / (1000 * 60 * 60 * 24)), 0);
+    const timeDiff = deadlineDate - today;
+    const daysRemaining = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 
-    return daysRemaining; // Retornar los días restantes, mínimo 0
+    // Si los días restantes son negativos, significa que el plazo ya venció
+    if (daysRemaining < 0) {
+        return { isOverdue: true, daysOverdue: Math.abs(daysRemaining) }; // Días de retraso
+    }
+
+    return { isOverdue: false, daysRemaining: daysRemaining }; // Días restantes
 }
 
 // Función para mostrar los cursos en el popup
@@ -89,20 +95,24 @@ function displayCourses(groupedCourses) {
 
         groupedCourses[period].forEach(course => {
             const listItem = document.createElement('li');
-            const daysRemaining = calculateDaysRemaining(course.sendDate); // Calcular días restantes
+            const daysInfo = calculateDaysRemaining(course.sendDate); // Calcular días restantes o retraso
 
-            // Asignar una clase según el rango de días restantes
+            // Asignar una clase según el estado del curso (dentro de plazo o retrasado)
             let countdownClass = '';
-            if (daysRemaining >= 3 && daysRemaining <= 7) {
-                countdownClass = 'countdown-green';
+            let daysText = '';
+
+            if (daysInfo.isOverdue) {
+                countdownClass = 'countdown-overdue'; // Clase CSS para cursos retrasados
+                daysText = `<i class="fa-solid fa-circle-exclamation"></i> Retrasado por <b>${daysInfo.daysOverdue} días</b>`;
             } else {
-                countdownClass = 'countdown-red';
+                countdownClass = daysInfo.daysRemaining >= 3 ? 'countdown-green' : 'countdown-red'; // Clase según el tiempo restante
+                daysText = `<i class="fa-solid fa-circle-exclamation"></i> Quedan <b>${daysInfo.daysRemaining} días</b> para la revisión`;
             }
 
             listItem.innerHTML = `
                 <strong>${course.courseId} - ${course.courseName}</strong><br>
                 Fecha de envío: ${course.sendDate} <br>
-                <span class="countdown ${countdownClass}"><i class="fa-solid fa-circle-exclamation"></i> Quedan <b>${daysRemaining} días</b> para la revisión</span>
+                <span class="countdown ${countdownClass}">${daysText}</span>
             `;
             courseList.appendChild(listItem);
         });
