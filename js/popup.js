@@ -109,9 +109,11 @@ function displayCourses(groupedCourses) {
                 daysText = `<i class="fa-solid fa-circle-exclamation"></i> Quedan <b>${daysInfo.daysRemaining} días</b> para la revisión`;
             }
 
+            // Mostrar el número de revisiones junto con la fecha de envío y días restantes
             listItem.innerHTML = `
                 <strong>${course.courseId} - ${course.courseName}</strong><br>
                 Fecha de envío: ${course.sendDate} <br>
+                Número de revisiones: ${course.revisionCount} <br>
                 <span class="countdown ${countdownClass}">${daysText}</span>
             `;
             courseList.appendChild(listItem);

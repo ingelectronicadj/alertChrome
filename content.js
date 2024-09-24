@@ -13,14 +13,16 @@ rows.forEach(row => {
     const courseId = cells[0].textContent.trim(); // ID del curso (1ª columna)
     const courseName = cells[1].textContent.trim(); // Nombre del curso (2ª columna)
     const sendDate = cells[5].textContent.trim(); // Fecha de envío (6ª columna)
+    const revisionCount = parseInt(cells[6].textContent.trim(), 10); // Número de revisiones (7ª columna)
 
-    // Buscar el texto "Acreditar" específicamente en la columna adecuada (columna 8)
+    // Buscar el texto "Acreditar" en la columna 8
     const actionCell = row.querySelectorAll('td')[7]; // Seleccionar la celda de la columna 8
     if (actionCell && actionCell.textContent.trim() === 'Acreditar') {
       courses.push({
         courseId,
         courseName,
         sendDate,
+        revisionCount,
         academicPeriod
       });
     }
