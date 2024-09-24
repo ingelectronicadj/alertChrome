@@ -47,11 +47,19 @@ function groupCoursesByPeriod(courses) {
 }
 
 // Función para calcular los días restantes o de retraso para revisar un curso
-function calculateDaysRemaining(sendDate) {
+function calculateDaysRemaining(sendDate, revisionCount) {
     const reviewDeadlineDays = 7; // Días de plazo para la revisión
     const today = new Date(); // Fecha actual
-    const sendDateParts = sendDate.split('/'); // Asumimos formato DD/MM/YYYY
-    const sendDateObj = new Date(`${sendDateParts[2]}-${sendDateParts[1]}-${sendDateParts[0]}`);
+
+    let sendDateObj;
+    if (revisionCount > 1) {
+        // Si hay más de una revisión, establecer la fecha de envío como la fecha actual
+        sendDateObj = today;
+    } else {
+        // Si es la primera revisión, usar la fecha de envío original
+        const sendDateParts = sendDate.split('/'); // Asumimos formato DD/MM/YYYY
+        sendDateObj = new Date(`${sendDateParts[2]}-${sendDateParts[1]}-${sendDateParts[0]}`);
+    }
 
     // Calcular la fecha límite sumando los días de plazo
     const deadlineDate = new Date(sendDateObj);
@@ -95,7 +103,7 @@ function displayCourses(groupedCourses) {
 
         groupedCourses[period].forEach(course => {
             const listItem = document.createElement('li');
-            const daysInfo = calculateDaysRemaining(course.sendDate); // Calcular días restantes o retraso
+            const daysInfo = calculateDaysRemaining(course.sendDate, course.revisionCount); // Calcular días restantes o retraso
 
             // Asignar una clase según el estado del curso (dentro de plazo o retrasado)
             let countdownClass = '';
@@ -109,12 +117,14 @@ function displayCourses(groupedCourses) {
                 daysText = `<i class="fa-solid fa-circle-exclamation"></i> Quedan <b>${daysInfo.daysRemaining} días</b> para la revisión`;
             }
 
-            // Mostrar el número de revisiones junto con la fecha de envío y días restantes
+            // Mostrar el número de revisiones si está disponible
+            const reviewCountText = course.revisionCount ? `Número de revisiones: ${course.revisionCount}` : 'Número de revisiones: 1';
+
             listItem.innerHTML = `
                 <strong>${course.courseId} - ${course.courseName}</strong><br>
                 Fecha de envío: ${course.sendDate} <br>
-                Número de revisiones: ${course.revisionCount} <br>
-                <span class="countdown ${countdownClass}">${daysText}</span>
+                <span class="countdown ${countdownClass}">${daysText}</span><br>
+                <span class="review-count">${reviewCountText}</span>
             `;
             courseList.appendChild(listItem);
         });
